@@ -1,11 +1,13 @@
 import React from 'react';
 import './main.scss';
+import Form from '../form/Form.js';
 
 function Main() {
   return (
-    <footer className="App-main">
+    <main className="App-main">
       <p>Main Body</p>
-    </footer>
+      <Form />
+    </main>
   )
 }
 
