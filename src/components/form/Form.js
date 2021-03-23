@@ -7,14 +7,18 @@ class Form extends React.Component {
     this.state = {
       apiMethod: [],
       apiUrl: [],
+      methodClass: [],
     }
   }
 
   addUrlAndMethod = () => {
     this.setState({
-      apiUrl: [...this.state.apiUrl, this.state.input],
-      apiMethod: [...this.state.apiMethod, this.state.methodValue],
+      apiUrl: [this.state.input, ...this.state.apiUrl],
+      apiMethod: [this.state.methodValue, ...this.state.apiMethod],
+      methodClass: [this.state.classValue, ...this.state.methodClass],
     });
+
+
   }
 
   // chooseMethod = () => {
@@ -31,6 +35,7 @@ class Form extends React.Component {
   methodChange = (e) => {
     console.log(e.target.value);
     this.setState({ methodValue: e.target.value });
+    this.setState({ classValue: `${e.target.value}Button` });
   }
 
   handleChange = (e) => {
@@ -47,21 +52,21 @@ class Form extends React.Component {
     return (
       <div>
         <form className="App-form" onSubmit={this.handleSubmit}>
-          <label>Enter URL</label>
-          <input onChange={this.handleChange} type='text' value ={this.state.input} />
-          <label>Choice of Method:
-
-              <button value="GET" onClick={this.methodChange}>GET</button>
-              <button value="POST" onClick={this.methodChange}>POST</button>
-              <button value="PUT" onClick={this.methodChange}>PUT</button>
-              <button value="DELETE" onClick={this.methodChange}>DELETE</button>
-
+          <label>Enter URL
+            <input onChange={this.handleChange} type='text' value ={this.state.input} />
           </label>
-          <input type="submit" value="submit" onClick={this.addUrlAndMethod} />
+          <br/>
+          <label>Choice of Method:
+              <button value="get" onClick={this.methodChange}>GET</button>
+              <button value="post" onClick={this.methodChange}>POST</button>
+              <button value="put" onClick={this.methodChange}>PUT</button>
+              <button value="delete" onClick={this.methodChange}>DELETE</button>
+          </label>
+          <br/>
+          <input type="submit" value="Go" onClick={this.addUrlAndMethod} />
         </form>
-        <div>
-          {this.state.apiUrl.map((url, idx) => <li>{this.state.apiMethod[idx]} {url}</li>)}
-          {/* <li>{this.state.apiMethod} {this.state.apiUrl}</li> */}
+        <div className="history-frame">
+          {this.state.apiUrl.map((url, idx) => <li><button className={this.state.methodClass[idx]}>{this.state.apiMethod[idx]}</button> {url}</li>)}
         </div>
       </div>
     )
