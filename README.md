@@ -36,7 +36,6 @@ Today, we begin the first of a 4-Phase build of the RESTy application, written i
 [React Documents](https://reactjs.org/docs/getting-started.html)
 
 
-
 ## Create-React-App Information
 
 ### Getting Started with Create React App
