@@ -11,7 +11,7 @@ class Form extends React.Component {
       classValue: 'getButton',
       input: '',
       requestInput: '',
-      apiUrl: [],
+      apiUrl: ['https://pokeapi.co/api/v2/pokemon/'],
       methodClass: [],
       formGet: 'getButton',
       formPost: 'plain',
