@@ -22,12 +22,12 @@ describe('Testing form and results components', () => {
   it('Should print response headers and response body to the results window on a successful API call', async () => {
     const response = await superagent.get('https://pokeapi.co/api/v2/pokemon/');
     let headers = response.headers;
-    let body = response.body.results[0].name;
+    let body = response.body;
 
 
     render(<Results data={body} headerData={headers} />)
 
-    expect(screen.getByText("bulbasaur")).toBeInTheDocument();
+    expect(screen.getByText("results")).toBeInTheDocument();
     expect(screen.getByText("cache-control")).toBeInTheDocument();
 
   });
