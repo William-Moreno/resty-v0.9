@@ -81,12 +81,14 @@ class Form extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await superagent.get(this.state.apiUrl);
+    const response = await superagent.get(this.state.apiUrl[0]);
 
     let data = response.body;
     let headerData = response.header;
 
     this.props.updateResults(data, headerData);
+    this.setState({ input: '' });
+
   }
 
 
@@ -111,7 +113,7 @@ class Form extends React.Component {
         </form>
         <div className="history-frame">
           <h3 className="history-title">Recent Routes</h3>
-          {this.state.apiUrl.map((url, idx) => <li><button className={this.state.methodClass[idx]}>{this.state.apiMethod[idx]}</button> {url}</li>)}
+          {this.state.apiUrl.map((url, idx) => <li key="idx"><button className={this.state.methodClass[idx]}>{this.state.apiMethod[idx]}</button> {url}</li>)}
         </div>
       </div>
     )
