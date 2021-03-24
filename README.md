@@ -15,6 +15,8 @@ In phase 2, we will be connecting RESTy to live APIs, fetching and displaying re
 
 ## Getting Started
 
+Site is deployed on Netlify [here](https://affectionate-panini-eca446.netlify.app/)
+
 - clone repository
 - cd into the directory
 - `npm install` 
