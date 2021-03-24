@@ -1,10 +1,15 @@
 # Component Based UI
 
 RESTy Phase 1: Begin work on the RESTy API testing application
+RESTy Phase 2: Connect RESTy with APIs, running live requests
 
 ## Overview
 
+### Lab 26
 Today, we begin the first of a 4-Phase build of the RESTy application, written in React. In this first phase, our goal is to setup the basic scaffolding of the application, with intent being to add more functionality to the system as we go. This initial build sets up the file structure so that we can progressively build this application in a scalable manner
+
+### Lab 27
+In phase 2, we will be connecting RESTy to live APIs, fetching and displaying remote data. Our primary focus will be to service GET requests
 
 ## Author: William Moreno
 
@@ -17,6 +22,7 @@ Today, we begin the first of a 4-Phase build of the RESTy application, written i
 
 ## Features
 
+### Lab 26
 - `App.js` serves as a container for all subcomponents
   - imports `App.scss` as a base design
   - imports `Header.js`, `Main.js` and `Footer.js` using import syntax
@@ -29,11 +35,33 @@ Today, we begin the first of a 4-Phase build of the RESTy application, written i
   - allows user to choose a method and stores it in state
   - displays the user's choices in a separate `<div>`
 
+### Lab 27
+- `App.js` serves as a container for all subcomponents
+  - holds state: Count and Results Array
+  - has a class method that can update state
+  - renders 4 Child Components
+- `<Form />`
+  - `updateResults` function sent to it as a prop
+  - renders a URL entry form
+  - supplies a selection of REST methods to choose from
+    - 'GET' is the default
+  - on submit:
+    - sends API results back to `App.js` using the method sent down in props
+- `<Results />`
+  - receives props including headers and results
+  - renders the result headers as "pretty" JSON
+  - renders the result body as "pretty" JSON
+
+
 ## UML & Resources
 
 ![Initial UML](./assets/resty-uml-day1.PNG)
 
+![Props & State UML](./assets/lab-27-uml.PNG)
+
 [React Documents](https://reactjs.org/docs/getting-started.html)
+
+
 
 
 ## Create-React-App Information
