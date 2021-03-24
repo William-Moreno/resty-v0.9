@@ -16,7 +16,6 @@ describe('Testing form and results components', () => {
 
     fireEvent.click(button);
 
-    // handy helper for awaiting funcion calls within components.
     await waitFor(() => expect(handleUpdate).toHaveBeenCalled());
   });
 
