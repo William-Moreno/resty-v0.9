@@ -1,14 +1,19 @@
 import React from 'react';
 import './form.scss';
+import superagent from 'superagent';
 
 class Form extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       apiMethod: [],
+      methodValue: 'get',
+      classValue: 'getButton',
+      input: '',
+      requestInput: '',
       apiUrl: [],
       methodClass: [],
-      formGet: 'plain',
+      formGet: 'getButton',
       formPost: 'plain',
       formPut: 'plain',
       formDelete: 'plain',
@@ -24,12 +29,6 @@ class Form extends React.Component {
 
 
   }
-
-  // chooseMethod = () => {
-  //   this.setState({
-  //     apiMethod: 
-  //   })
-  // }
 
   handleMethodChange = (e) => {
     console.log(e.target.value);
@@ -75,10 +74,20 @@ class Form extends React.Component {
     this.setState({ input: e.target.value });
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleRequestChange = (e) => {
+    this.setState({ requestInput: e.target.value });
   }
 
+  handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await superagent.get(this.state.apiUrl);
+
+    let data = response.body;
+    let headerData = response.header;
+
+    this.props.updateResults(data, headerData);
+  }
 
 
   render() {
@@ -89,12 +98,15 @@ class Form extends React.Component {
             <input className="urlEntry" onChange={this.handleChange} type='text' value ={this.state.input} />
           </label>
           <br/>
-          <label>Choice of Method: <br />
-              <button className={this.state.formGet} value="get" onClick={this.methodChange}>GET</button>
-              <button className={this.state.formPost} value="post" onClick={this.methodChange}>POST</button>
-              <button className={this.state.formPut} value="put" onClick={this.methodChange}>PUT</button>
-              <button className={this.state.formDelete} value="delete" onClick={this.methodChange}>DELETE</button>
-          <input className="plain goButton" type="submit" value="Go" onClick={this.addUrlAndMethod} />
+          <label className="selections">Choice of Method: <br />
+            <button className={this.state.formGet} value="get" onClick={this.methodChange}>GET</button>
+            <button className={this.state.formPost} value="post" onClick={this.methodChange}>POST</button>
+            <button className={this.state.formPut} value="put" onClick={this.methodChange}>PUT</button>
+            <button className={this.state.formDelete} value="delete" onClick={this.methodChange}>DELETE</button>
+            <label>Request Body: <br />
+              <textarea className="request-field" value={this.state.requestInput} onChange={this.handleRequestChange} />
+            </label>
+            <input className="plain goButton" type="submit" value="Go" onClick={this.addUrlAndMethod} />
           </label>
         </form>
         <div className="history-frame">
