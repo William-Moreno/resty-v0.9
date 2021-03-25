@@ -7,7 +7,7 @@ import Form from './components/form/Form.js';
 import Footer from './components/footer/Footer.js';
 import Results from './components/results/Results.js';
 import History from './components/history/History.js';
-import { data } from 'msw/lib/types/context';
+
 
 class App extends React.Component {
   constructor() {
@@ -26,7 +26,7 @@ class App extends React.Component {
   updateResults = (data, headerData) => {
     this.setState({
       count: data.count,
-      resultHeader: headerData,
+      resultsHeader: headerData,
       resultsBody: data.results,
     });
   }
