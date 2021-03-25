@@ -12,7 +12,7 @@ class Results extends React.Component {
   }
 
   render() {
-    if(this.props.data) {
+    if(this.props.data.resultsBody) {
     return (
       <div className="App-results">
         <h3 className="results-title">Results Window</h3>
@@ -25,7 +25,11 @@ class Results extends React.Component {
       </div>
     );
   } else {
-    return (<p>No Data to Display</p>);
+    return (
+    <div className="App-results">
+    <p>No Data to Display</p>
+    </div>
+    )
   }
   }
 }
