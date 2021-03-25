@@ -7,12 +7,19 @@ class Form extends React.Component {
     this.state = {
       input: '',
       restType: 'GET',
+      requestEntry: '',
     }
   }
 
   handleInputChange = (e) => {
     this.setState({
       input: e.target.value
+    })
+  }
+
+  handleRequestChange = (e) => {
+    this.setState({
+      requestEntry: e.target.value
     })
   }
 
@@ -25,13 +32,24 @@ class Form extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const request = await fetch(this.state.input, {
-      method: this.state.restType,
-    });
-    const data = await request.json();
-    console.log(data);
-    const headers = request.headers;
-    console.log(headers);
+    this.props.updateApiCall(this.state.restType, this.state.input);
+    let request;
+    let data;
+    let headers;
+
+    if(this.state.restType === 'GET') {
+      request = await fetch(this.state.input, {
+        method: this.state.restType,
+      });
+    } else {
+      request = await fetch(this.state.input, {
+        method: this.state.restType,
+        body: JSON.stringify(this.state.requestEntry) || '',
+      });
+    }
+
+    data = await request.json();
+    headers = request.headers;
     this.props.updateResults(data, headers);
   }
 
@@ -48,6 +66,7 @@ class Form extends React.Component {
           <button onClick={this.handleTypeChange} value="POST">POST</button>
           <button onClick={this.handleTypeChange} value="PUT">PUT</button>
           <button onClick={this.handleTypeChange} value="DELETE">DELETE</button>
+          <textarea onChange={this.handleRequestChange} value={this.state.requestEntry}></textarea>
         </form>
       </div>
     )
