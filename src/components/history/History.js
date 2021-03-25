@@ -21,13 +21,17 @@ clearHistory = (e) => {
   this.props.emptyStorage();
 }
 
+repopulate = (e) => {
+  console.log(e.target);
+}
+
 
   render() {
     return (
       <div className="history-frame">
         <h3>History Header</h3>
         <button onClick={this.clearHistory}>Clear History</button>
-        {this.props.data.callHistory.map((call, idx) => <li key={idx}><button className="method-button">{call.rest}</button> {call.url}</li>)}
+        {this.props.data.callHistory.map((call, idx) => <li key={idx} onClick={this.repopulate}><button className="method-button">{call.rest}</button> {call.url}</li>)}
       </div>
     );
   }

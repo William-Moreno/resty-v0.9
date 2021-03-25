@@ -8,6 +8,7 @@ class Form extends React.Component {
       input: '',
       restType: 'GET',
       requestEntry: '',
+      isLoading: false,
     }
   }
 
@@ -32,11 +33,11 @@ class Form extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.props.updateApiCall(this.state.restType, this.state.input);
+    await this.setState({ isLoading: true });
     let request;
     let data;
     let headers;
-
+    
     if(this.state.restType === 'GET') {
       request = await fetch(this.state.input, {
         method: this.state.restType,
@@ -48,9 +49,12 @@ class Form extends React.Component {
       });
     }
 
+    this.setState({ isLoading: false });
+    
     data = await request.json();
     headers = request.headers;
     this.props.updateResults(data, headers);
+    this.props.updateApiCall(this.state.restType, this.state.input, data);
   }
 
   render() {

@@ -8,6 +8,7 @@ import Footer from './components/footer/Footer.js';
 import Results from './components/results/Results.js';
 import History from './components/history/History.js';
 
+
 class App extends React.Component {
   constructor() {
     super();
@@ -25,18 +26,19 @@ class App extends React.Component {
   updateResults = (data, headerData) => {
     this.setState({
       count: data.count,
-      resultHeader: headerData,
+      resultsHeader: headerData,
       resultsBody: data.results,
     });
   }
 
-  updateApiCall = async (rest, url) => {
+  updateApiCall = async (rest, url, data) => {
     this.setState({
       restType: rest,
       apiUrl: url,
       apiCall: {
         rest: rest,
         url: url,
+        body: data,
       }
     });
 
