@@ -1,124 +1,57 @@
 import React from 'react';
 import './form.scss';
-import superagent from 'superagent';
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiMethod: [],
-      methodValue: 'get',
-      classValue: 'getButton',
       input: '',
-      requestInput: '',
-      apiUrl: ['https://pokeapi.co/api/v2/pokemon/'],
-      methodClass: [],
-      formGet: 'getButton',
-      formPost: 'plain',
-      formPut: 'plain',
-      formDelete: 'plain',
+      restType: 'GET',
     }
   }
 
-  addUrlAndMethod = () => {
+  handleInputChange = (e) => {
     this.setState({
-      apiUrl: [this.state.input, ...this.state.apiUrl],
-      apiMethod: [this.state.methodValue, ...this.state.apiMethod],
-      methodClass: [this.state.classValue, ...this.state.methodClass],
-    });
-
-
+      input: e.target.value
+    })
   }
 
-  handleMethodChange = (e) => {
-    console.log(e.target.value);
-    this.setState({ methodValue: e.target.value });
-  }
-
-  methodChange = (e) => {
-    console.log(e.target.value);
-    this.setState({ methodValue: e.target.value });
-    this.setState({ classValue: `${e.target.value}Button` });
-    if(e.target.value === 'get') {
-      this.setState({
-        formGet: 'getButton',
-        formPost: 'plain',
-        formPut: 'plain',
-        formDelete: 'plain',
-      });
-    } else if(e.target.value === 'post') {
-      this.setState({
-        formGet: 'plain',
-        formPost: 'postButton',
-        formPut: 'plain',
-        formDelete: 'plain',
-      });
-    } else if(e.target.value === 'put') {
-      this.setState({
-        formGet: 'plain',
-        formPost: 'plain',
-        formPut: 'putButton',
-        formDelete: 'plain',
-      });
-    } else if(e.target.value === 'delete') {
-      this.setState({
-        formGet: 'plain',
-        formPost: 'plain',
-        formPut: 'plain',
-        formDelete: 'deleteButton',
-      });
-    }
-  }
-
-  handleChange = (e) => {
-    this.setState({ input: e.target.value });
-  }
-
-  handleRequestChange = (e) => {
-    this.setState({ requestInput: e.target.value });
+  handleTypeChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      restType: e.target.value
+    })
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = await superagent.get(this.state.apiUrl[0]);
-
-    let data = response.body;
-    let headerData = response.header;
-
-    this.props.updateResults(data, headerData);
-    this.setState({ input: '' });
-
+    const request = await fetch(this.state.input, {
+      method: this.state.restType,
+    });
+    const data = await request.json();
+    console.log(data);
+    const headers = request.headers;
+    console.log(headers);
+    this.props.updateResults(data, headers);
   }
-
 
   render() {
     return (
-      <div>
-        <form className="App-form" onSubmit={this.handleSubmit}>
-          <label>Enter REST API URL: <br />
-            <input className="urlEntry" onChange={this.handleChange} type='text' value ={this.state.input} />
-          </label>
-          <br/>
-          <label className="selections">Choice of Method: <br />
-            <button className={this.state.formGet} value="get" onClick={this.methodChange}>GET</button>
-            <button className={this.state.formPost} value="post" onClick={this.methodChange}>POST</button>
-            <button className={this.state.formPut} value="put" onClick={this.methodChange}>PUT</button>
-            <button className={this.state.formDelete} value="delete" onClick={this.methodChange}>DELETE</button>
-            <label>Request Body: <br />
-              <textarea className="request-field" value={this.state.requestInput} onChange={this.handleRequestChange} />
-            </label>
-            <input className="plain goButton" type="submit" value="Go" onClick={this.addUrlAndMethod} />
-          </label>
+      <div className="App-form">
+        <form className="app-url" onSubmit={this.handleSubmit}>
+          <label>Enter URL</label>
+          <input data-testid="form-input" onChange={this.handleInputChange} type="text" value={this.state.input} />
+          <button>Go!</button>
         </form>
-        <div className="history-frame">
-          <h3 className="history-title">Recent Routes</h3>
-          {this.state.apiUrl.map((url, idx) => <li key="idx"><button className={this.state.methodClass[idx]}>{this.state.apiMethod[idx]}</button> {url}</li>)}
-        </div>
+        <form className="rest-select">
+          <button onClick={this.handleTypeChange} value="GET">GET</button>
+          <button onClick={this.handleTypeChange} value="POST">POST</button>
+          <button onClick={this.handleTypeChange} value="PUT">PUT</button>
+          <button onClick={this.handleTypeChange} value="DELETE">DELETE</button>
+        </form>
       </div>
     )
   }
-}
-
+};
 
 export default Form;

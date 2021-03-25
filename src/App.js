@@ -5,6 +5,7 @@ import Header from './components/header/Header.js';
 import Form from './components/form/Form.js';
 import Footer from './components/footer/Footer.js';
 import Results from './components/results/Results.js';
+import History from './components/history/History.js';
 
 class App extends React.Component {
   constructor() {
@@ -18,8 +19,9 @@ class App extends React.Component {
 
   updateResults = (data, headerData) => {
     this.setState({
+      count: data.count,
       resultHeader: headerData,
-      resultsBody: data,
+      resultsBody: data.results,
     });
   }
 
@@ -28,8 +30,13 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <main className="App-main">
+          <div className="form-area">
           <Form updateResults={this.updateResults} />
-          <Results data={this.state.resultsBody} headerData={this.state.resultHeader} />
+          </div>
+          <div className="history-results">
+          <History data={this.state} />
+          <Results data={this.state} />
+          </div>
         </main>
         <Footer />
     </div>
