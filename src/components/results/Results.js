@@ -13,11 +13,11 @@ class Results extends React.Component {
   }
 
   render() {
-    if(this.props.data.resultsBody || this.props.data.isRecall) {
-      let recallInfo;
-      if(this.props.data.isRecall) {
-      recallInfo = this.props.data.callHistory[this.props.data.recallIndex];
-      console.log(recallInfo);
+    let recallInfo;
+    if(this.props.data.isRecall) {
+    recallInfo = this.props.data.callHistory[this.props.data.recallIndex];
+    console.log(recallInfo);
+    if(this.props.data.resultsBody || recallInfo) {
       }
     return (
       <div className="App-results">
