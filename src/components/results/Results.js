@@ -27,7 +27,7 @@ class Results extends React.Component {
   } else {
     return (
     <div className="App-results">
-    <p>No Data to Display</p>
+    <h3>No Data to Display</h3>
     </div>
     )
   }
