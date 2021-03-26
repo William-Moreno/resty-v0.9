@@ -2,6 +2,8 @@ import React from 'react';
 import './results.scss';
 import { If, Else } from '../if/If.js';
 import JSONPretty from 'react-json-pretty';
+import Loader from "react-loader-spinner";
+import { If, Else } from '../if/If.js';
 
 
 class Results extends React.Component {
@@ -13,12 +15,8 @@ class Results extends React.Component {
   }
 
   render() {
-    let recallInfo;
-    if(this.props.data.isRecall) {
-    recallInfo = this.props.data.callHistory[this.props.data.recallIndex];
-    console.log(recallInfo);
-    if(this.props.data.resultsBody || recallInfo) {
-      }
+    if(this.props.request.body) {
+      console.log(this.props.request);
     return (
       <div className="App-results">
         <h3 className="results-title">Results Window</h3>
@@ -32,12 +30,11 @@ class Results extends React.Component {
         </If>
         <Else condition={this.props.data.isRecall}>
           <h4 className="response-headers">Count</h4>
-          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.data.count}></JSONPretty>
-          <h4 className="response-headers">Response Headers</h4>
-          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.data.resultsHeader}></JSONPretty>
+          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.request.body.count}></JSONPretty>
+          {/* <h4 className="response-headers">Response Headers</h4>
+          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.request.body.header}></JSONPretty> */}
           <h4 className="response-body">Results</h4>
-          <JSONPretty id="json-pretty2" className="json-pretty" data={this.props.data.resultsBody}></JSONPretty>
-        </Else>
+          <JSONPretty id="json-pretty2" className="json-pretty" data={this.props.request.body.results}></JSONPretty>
       </div>
     );
   } else {

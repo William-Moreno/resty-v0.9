@@ -1,112 +1,79 @@
 import React from 'react';
-import ls from 'local-storage';
 import './App.scss';
-
+import ls from 'local-storage';
 import Header from './components/header/Header.js';
 import Form from './components/form/Form.js';
 import Footer from './components/footer/Footer.js';
 import Results from './components/results/Results.js';
 import History from './components/history/History.js';
+import { If, IsObjectEmpty } from './components/if/If.js';
+import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
+import Home from './components/home/Home.js';
+import Help from './components/help/Help.js';
 
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-       count: 0,
-       resultsHeader: '',
-       resultsBody: '',
-       restType: '',
-       apiUrl: '',
-       apiCall: {},
-       callHistory: [],
-       recallRest: '',
-       recallUrl: '',
-       isRecall: false,
-       recallIndex: 0,
+       history: ls.get('history') || [],
+       request: {},
+       isLoading: false,
     }
-  }
-
-  updateResults = (data, headerData) => {
-    this.setState({
-      count: data.count,
-      resultsHeader: headerData,
-      resultsBody: data.results,
-    });
-  }
-
-  updateApiCall = async (rest, url, headers, data) => {
-    this.setState({
-      restType: rest,
-      apiUrl: url,
-      apiCall: {
-        rest: rest,
-        url: url,
-        headers: headers,
-        body: data,
-      },
-      isRecall: false,
-    });
-
-  }
-
-  repopulate = (index) => {
-    this.setState({
-      recallRest: this.state.callHistory[index].rest,
-      recallUrl: this.state.callHistory[index].url,
-      isRecall: true,
-      recallIndex: index,
-    });
-  }
-
-  switchOff = () => {
-    this.setState({
-      isRecall: false,
-    });
-  }
-
-  updateCallHistory = (call) => {
-    if(!this.state.callHistory.includes(call)) {
-      let addToCallHistory = [call, ...this.state.callHistory];
-      this.setState({
-        callHistory: addToCallHistory,
-        apiCall: {},
-      });
-      ls.set('callHistory', addToCallHistory);
-    }
-  }
-
-  emptyStorage = () => {
-    ls.clear();
-    this.setState({
-      callHistory: [],
-    });
   }
 
   componentDidMount() {
-    this.setState({
-      callHistory: ls.get('callHistory') || [],
-    });
+    this.setState({ history: ls.get('history') });
+  }
+
+  updateResults = (request) => {
+
+    let updateHistory;
+
+
+      if(!this.state.history.includes(request)) {
+      updateHistory = [request, ...this.state.history];
+      } else {
+      updateHistory = [request];
+
+    }
+      this.setState({ history: updateHistory, request: request });
+      ls.set('history', updateHistory);
 
   }
 
-  
+  toggle = () => {
+    this.setState({ isLoading: !this.state.isLoading });
+  }
+
 
   render() {
     return (
-      <div className="App">
+      <div className="App" role="application">
         <Header />
+        <Route exact path="/history">
+          <div className="history-page">
+          <History history={this.state.history} />
+          </div>
+        </Route>
+        <Route exact path="/help">
+          <div className="help-page">
+          <Help />
+          </div>
+        </Route>
+        <Route exact path="/">
         <main className="App-main">
           <div className="form-area">
-          <Form updateResults={this.updateResults} updateApiCall={this.updateApiCall} switchOff={this.switchOff} data={this.state} />
+          <Form updateResults={this.updateResults} history={this.state.history} toggle={this.toggle} />
           </div>
           <div className="history-results">
-          <History data={this.state} updateCallHistory={this.updateCallHistory} repopulate={this.repopulate} emptyStorage={this.emptyStorage} />
-          <Results data={this.state} />
+          <History history={this.state.history} />
+          <Results request={this.state.request} />
           </div>
         </main>
+        </Route>
         <Footer />
-    </div>
+       </div>
     )
   }
 }
