@@ -4,8 +4,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(6px + 2vmin);
+  justify-content: flex-end;
   font-style: italic;
   color: white;
+}
+
+.navlink {
+  color: #a461fb;
+  text-decoration: none;
+  padding-bottom: 6px;
+  margin: auto 6px;
+}
+
+.navlink:hover {
+  color: lime;
 }

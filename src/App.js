@@ -7,7 +7,7 @@ import Footer from './components/footer/Footer.js';
 import Results from './components/results/Results.js';
 import History from './components/history/History.js';
 import { If, IsObjectEmpty } from './components/if/If.js';
-import { BrowserRouter, Route, Switch, Navlink } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import Home from './components/home/Home.js';
 import Help from './components/help/Help.js';
 
@@ -28,13 +28,11 @@ class App extends React.Component {
 
   updateResults = (request) => {
 
-    let lookie = ls.get('history');
     let updateHistory;
-    if(lookie){
-      if(!lookie.includes(request)) {
-      updateHistory = [request, ...lookie];
-      }
-    } else {
+
+      if(!this.state.history.includes(request)) {
+      updateHistory = [request, ...this.state.history];
+      } else {
       updateHistory = [request];
     }
       this.setState({ history: updateHistory, request: request });
@@ -51,6 +49,16 @@ class App extends React.Component {
     return (
       <div className="App" role="application">
         <Header />
+        <Route exact path="/history">
+          <div className="history-page">
+          <History history={this.state.history} />
+          </div>
+        </Route>
+        <Route exact path="/help">
+          <div className="help-page">
+          <Help />
+          </div>
+        </Route>
         <Route exact path="/">
         <main className="App-main">
           <div className="form-area">
@@ -62,18 +70,8 @@ class App extends React.Component {
           </div>
         </main>
         </Route>
-        <Route exact path="/help">
-          <div>
-          <Help />
-          </div>
-        </Route>
-        <Route exact path="/history">
-          <div className="history-page">
-          <History history={this.state.history} />
-          </div>
-        </Route>
         <Footer />
-    </div>
+       </div>
     )
   }
 }

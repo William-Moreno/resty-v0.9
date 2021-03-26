@@ -14,8 +14,13 @@ class Form extends React.Component {
   }
 
   handleChange = (e) => {
-    let { name, value } = e.target;
-    this.setState({ [name]: value });
+
+    this.setState({ url: e.target.value });
+  }
+
+  handleMethodChange = (e) => {
+
+    this.setState({ method: e.target.value });
   }
 
   handleSubmit = async (e) => {
@@ -46,17 +51,19 @@ class Form extends React.Component {
   render() {
     return (
       <div className="App-form">
-        <form className="app-url" onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
+          <fieldset className="app-url">
           <label>Enter URL</label>
-          <input data-testid="form-input" onChange={this.handleChange} type="text" name="url" value={this.state.url} />
+          <input className="url-input" onChange={this.handleChange} type="text" name="url" value={this.state.url} />
           <button type="submit">Go!</button>
-        </form>
-        <form className="rest-select">
-          <button onClick={this.handleChange} value="GET" name="method">GET</button>
-          <button onClick={this.handleChange} value="POST" name="method">POST</button>
-          <button onClick={this.handleChange} value="PUT" name="method">PUT</button>
-          <button onClick={this.handleChange} value="DELETE" name="method">DELETE</button>
+          </fieldset>
+          <fieldset className="rest-select">
+          <button onClick={this.handleMethodChange} value="GET" name="method">GET</button>
+          <button onClick={this.handleMethodChange} value="POST" name="method">POST</button>
+          <button onClick={this.handleMethodChange} value="PUT" name="method">PUT</button>
+          <button onClick={this.handleMethodChange} value="DELETE" name="method">DELETE</button>
           <textarea onChange={this.handleChange} name="textEntry" value={this.state.textEntry}></textarea>
+          </fieldset>
         </form>
       </div>
     )

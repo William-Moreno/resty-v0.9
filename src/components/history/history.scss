@@ -7,10 +7,11 @@
   height: 53.5vh;
   width: 40vw;
   text-align: left;
-  overflow: hidden;
+  overflow: scroll;
   li {
+    font-size: 12px;
     list-style: none;
-    margin: 2px auto;
+    margin: 4px auto;
   }
 }
 

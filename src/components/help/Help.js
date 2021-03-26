@@ -1,4 +1,5 @@
 import React from 'react';
+import './help.scss';
 
 class Help extends React.Component {
   constructor() {

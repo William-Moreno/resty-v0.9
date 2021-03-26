@@ -13,11 +13,11 @@ class Header extends React.Component {
   render() {
   return (
     <div className="App-header">
-      <h1>RESTy</h1>
         <nav>
-          <Link to="/">Home</Link>
-          <Link to="/history">History</Link>
-          <Link to="/help">Help</Link>
+      <h2>RESTy</h2>
+          <Link className="navlink" to="/">Home</Link>
+          <Link className="navlink" to="/history">History</Link>
+          <Link className="navlink" to="/help">Help</Link>
         </nav>
     </div>
   )
