@@ -1,5 +1,6 @@
 import React from 'react';
 import './form.scss';
+import { If, Else } from '../if/If.js';
 
 class Form extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Form extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     this.props.toggle();
+
     let request;
     
     if(this.state.method === 'GET') {
@@ -46,6 +48,7 @@ class Form extends React.Component {
       error: false,
     });
     this.props.toggle();
+
   }
 
   render() {

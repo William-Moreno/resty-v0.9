@@ -30,10 +30,12 @@ class App extends React.Component {
 
     let updateHistory;
 
+
       if(!this.state.history.includes(request)) {
       updateHistory = [request, ...this.state.history];
       } else {
       updateHistory = [request];
+
     }
       this.setState({ history: updateHistory, request: request });
       ls.set('history', updateHistory);
