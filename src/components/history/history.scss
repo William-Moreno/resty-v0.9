@@ -1,5 +1,4 @@
 .history-frame {
-  position: absolute;
   border: 1px #000 solid;
   margin-top: 12px;
   margin-left: 5%;
@@ -25,4 +24,13 @@
   padding: 2px;
   margin-top: 0;
   text-align: center;
+}
+
+.history-page {
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

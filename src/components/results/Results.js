@@ -1,6 +1,8 @@
 import React from 'react';
 import './results.scss';
 import JSONPretty from 'react-json-pretty';
+import Loader from "react-loader-spinner";
+import { If, Else } from '../if/If.js';
 
 
 class Results extends React.Component {

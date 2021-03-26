@@ -9,7 +9,6 @@ class Form extends React.Component {
       method: 'GET',
       body: {},
       error: {},
-      isLoading: false,
       textEntry: '',
     }
   }
@@ -21,7 +20,7 @@ class Form extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ isLoading: true });
+    this.props.toggle();
     let request;
     
     if(this.state.method === 'GET') {
@@ -41,7 +40,7 @@ class Form extends React.Component {
       body: data,
       error: false,
     });
-    this.setState({ isLoading: false });
+    this.props.toggle();
   }
 
   render() {

@@ -1,12 +1,27 @@
 import React from 'react';
 import './header.scss';
+import { Link } from 'react-router-dom';
 
-function Header() {
+class Header extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      heading: 'Home',
+    }
+  }
+
+  render() {
   return (
-    <header className="App-header">
+    <div className="App-header">
       <h1>RESTy</h1>
-    </header>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/history">History</Link>
+          <Link to="/help">Help</Link>
+        </nav>
+    </div>
   )
+  }
 }
 
 export default Header;
