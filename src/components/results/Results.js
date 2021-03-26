@@ -12,16 +12,17 @@ class Results extends React.Component {
   }
 
   render() {
-    if(this.props.data.resultsBody) {
+    if(this.props.request.body) {
+      console.log(this.props.request);
     return (
       <div className="App-results">
         <h3 className="results-title">Results Window</h3>
           <h4 className="response-headers">Count</h4>
-          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.data.count}></JSONPretty>
-          <h4 className="response-headers">Response Headers</h4>
-          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.data.resultsHeader}></JSONPretty>
+          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.request.body.count}></JSONPretty>
+          {/* <h4 className="response-headers">Response Headers</h4>
+          <JSONPretty id="json-pretty1" className="json-pretty" data={this.props.request.body.header}></JSONPretty> */}
           <h4 className="response-body">Results</h4>
-          <JSONPretty id="json-pretty2" className="json-pretty" data={this.props.data.resultsBody}></JSONPretty>
+          <JSONPretty id="json-pretty2" className="json-pretty" data={this.props.request.body.results}></JSONPretty>
       </div>
     );
   } else {

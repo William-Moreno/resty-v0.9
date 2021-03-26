@@ -5,56 +5,43 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
-      restType: 'GET',
-      requestEntry: '',
+      url: '',
+      method: 'GET',
+      body: {},
+      error: {},
       isLoading: false,
+      textEntry: '',
     }
   }
 
-  handleInputChange = (e) => {
-    this.setState({
-      input: e.target.value
-    })
-  }
-
-  handleRequestChange = (e) => {
-    this.setState({
-      requestEntry: e.target.value
-    })
-  }
-
-  handleTypeChange = (e) => {
-    e.preventDefault();
-    this.setState({
-      restType: e.target.value
-    })
+  handleChange = (e) => {
+    let { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    await this.setState({ isLoading: true });
+    this.setState({ isLoading: true });
     let request;
-    let data;
-    let headers;
     
-    if(this.state.restType === 'GET') {
-      request = await fetch(this.state.input, {
-        method: this.state.restType,
-      });
+    if(this.state.method === 'GET') {
+      request = await fetch(this.state.url, { method: this.state.method });
     } else {
-      request = await fetch(this.state.input, {
-        method: this.state.restType,
-        body: JSON.stringify(this.state.requestEntry) || '',
+      request = await fetch(this.state.url, {
+        method: this.state.method,
+        body: this.state.textEntry ? JSON.stringify(this.state.textEntry) : '',
       });
     }
-
-    this.setState({ isLoading: false });
     
-    data = await request.json();
-    headers = request.headers;
-    this.props.updateResults(data, headers);
-    this.props.updateApiCall(this.state.restType, this.state.input, data);
+    let data = await request.json();
+    
+    this.props.updateResults({
+      url: this.state.url,
+      method: this.state.method,
+      body: data,
+      error: false,
+    });
+    this.setState({ isLoading: false });
   }
 
   render() {
@@ -62,15 +49,15 @@ class Form extends React.Component {
       <div className="App-form">
         <form className="app-url" onSubmit={this.handleSubmit}>
           <label>Enter URL</label>
-          <input data-testid="form-input" onChange={this.handleInputChange} type="text" value={this.state.input} />
-          <button>Go!</button>
+          <input data-testid="form-input" onChange={this.handleChange} type="text" name="url" value={this.state.url} />
+          <button type="submit">Go!</button>
         </form>
         <form className="rest-select">
-          <button onClick={this.handleTypeChange} value="GET">GET</button>
-          <button onClick={this.handleTypeChange} value="POST">POST</button>
-          <button onClick={this.handleTypeChange} value="PUT">PUT</button>
-          <button onClick={this.handleTypeChange} value="DELETE">DELETE</button>
-          <textarea onChange={this.handleRequestChange} value={this.state.requestEntry}></textarea>
+          <button onClick={this.handleChange} value="GET" name="method">GET</button>
+          <button onClick={this.handleChange} value="POST" name="method">POST</button>
+          <button onClick={this.handleChange} value="PUT" name="method">PUT</button>
+          <button onClick={this.handleChange} value="DELETE" name="method">DELETE</button>
+          <textarea onChange={this.handleChange} name="textEntry" value={this.state.textEntry}></textarea>
         </form>
       </div>
     )
