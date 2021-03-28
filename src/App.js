@@ -6,9 +6,7 @@ import Form from './components/form/Form.js';
 import Footer from './components/footer/Footer.js';
 import Results from './components/results/Results.js';
 import History from './components/history/History.js';
-import { If, IsObjectEmpty } from './components/if/If.js';
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
-import Home from './components/home/Home.js';
+import { Route } from 'react-router-dom';
 import Help from './components/help/Help.js';
 
 
