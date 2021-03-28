@@ -10,7 +10,7 @@ class History extends React.Component {
   }
 
   render() {
-        console.log(this.props.data.history);
+        console.log(this.props.history);
     return (
       <div className="history-frame">
         <h3>History Header</h3>
